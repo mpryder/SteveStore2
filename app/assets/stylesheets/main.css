@@ -1,0 +1,183 @@
+body {
+background: url("background2.jpg") no-repeat center;
+	background-size: cover;
+}
+	/* Center the website */
+			#wrapper{
+				width:920px;
+				margin:0 auto;
+				height: auto;
+			}
+			
+			/* Give the header a height and a background image */
+			#header{
+				height:200px; 
+				background: #000 url("background.jpg") repeat-y scroll left top;
+				text-align:center;
+			}
+			
+			/* Create a Shadow Overlay */ 
+			#header div{
+				width:920px;
+				height:200px;
+				background: transparent url("overlay.png") no-repeat scroll left top;
+			}
+			
+			/* Vertically position header text and style it*/
+			#header h1 {
+				padding-top:100px;
+				font-family: Arial, "MS Trebuchet", sans-serif;
+				color:white;
+				font-size: 40px;
+			}
+			
+			
+#navbar ul          
+ {
+     margin: 0;         
+     padding: 5px;         
+     list-style-type: none;         
+     text-align: left;  
+     font-size: 17px;      
+     background-color: #333;         
+ }  
+ 
+ #navbar ul li           
+ {
+     display: inline;
+    
+ 
+ }  
+ 
+ #navbar ul li a          
+ {
+     text-decoration: none;         
+     padding: .2em 1em;         
+     color: #fff;         
+     background-color: #333;         
+     }  
+     
+#navbar ul li a:hover          
+{
+    color: navy;         
+   	border:0px orange solid;
+ 	border-radius:9px;
+ 	-moz-border-radius:9px; /* Old Firefox */
+       
+}
+
+#side {
+	float: left;
+	height: inherit;
+	padding: 1em;
+	background-color: #FFFFFF;
+	height: 690px;
+	}
+
+#side a {
+	text-decoration: none;
+	font-size: 17px; 
+}
+	
+#content {
+	padding: 1em;
+	float: inherit;
+	background-color: #FFFFFF;
+	text-align: center;
+	height: 750px;
+}
+
+#content table{
+	margin: 0 auto;
+}
+
+
+
+#ccomment{
+	width:250px;
+	height:250px;
+}
+
+.slideshow{
+	margin-top:100px;
+	margin-left:425px;
+}
+.slideshow img { 
+	display: none; 
+	}
+.slideshow img.first {
+	 display: block;
+	 }
+    
+#welcome {
+	float: right;
+	color: #fff;
+	font-size: 9px;
+}
+
+#show {
+	padding: 2em;
+	float: left;
+	width: 500px; 
+}
+
+#orderitem td {
+	display: list;
+}
+
+.fieldId{
+	display: none;
+}
+
+/*#content .arrow{
+    background: url("arrow.png") no-repeat -10px 0;
+    height: 120px;
+    left: 214px;
+    float: right;
+    margin-top: -140px;
+    margin-left: 300px;
+    top: 392px;
+    width: 11px;
+
+   	Defining a smooth CSS3 animation for turning the arrow 
+
+    -moz-transition:0.3s;
+    -webkit-transition:0.3s;
+    -o-transition:0.3s;
+    -ms-transition:0.3s;
+    transition:0.3s;
+
+     Putting the arrow in its initial position 
+
+    -moz-transform: rotate(-134deg);
+    -webkit-transform: rotate(-134deg);
+    -o-transform: rotate(-134deg);
+    -ms-transform: rotate(-134deg);
+    transform: rotate(-134deg);
+}
+
+The small piece that goes over the arrow 
+#content .arrowCap{
+    background: url("arrow.png") no-repeat -43px 0;
+    height: 20px;
+    left: 208px;
+    float: right;
+    margin-top: -90px;
+    margin-right: 334px;
+    top: 443px;
+    width: 20px;
+    z-index: 10;
+}
+
+#content  .meterText{
+	color: #575757;
+	font-size: 10px;
+	left: 189px;
+	line-height: 1.1;
+	float: right;
+	margin-top: -38px;
+	margin-right: 305px;
+	top: 485px;
+	width: 60px;
+}*/	
+

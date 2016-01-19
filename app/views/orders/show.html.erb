@@ -1,0 +1,41 @@
+
+
+<p>
+  <b>Order date:</b>
+  <%= @order.order_date %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @order.user_id %>
+</p>
+
+<!--<p>
+	<b>First Name:</b>
+ <%= @order.firstname %>	
+</p>
+
+<p>
+	<b>Last Name:</b>
+	<%= @order.lastname %>
+</p>
+
+<p>
+	<b>Address:</b>
+	<%= @order.address %>
+</p>-->
+<table id="orderitem">
+	<th>Product Name</th>
+	<th>Quantity</th>
+	<th>Price</th>
+	<% @orderitems.each do |orderitem|%>
+<tr><td><%= orderitem.name %></td>
+<td><%= orderitem.quantity %></td>
+<td><%= number_to_currency(orderitem.price, :unit =>"€") %></td></tr>
+
+<% end %>
+</table>
+<% if current_user.admin?%> 
+<%= link_to 'Edit', edit_order_path(@order) %> 
+<% end %>
+<%= link_to 'Back to shopping', :controller => :products %>

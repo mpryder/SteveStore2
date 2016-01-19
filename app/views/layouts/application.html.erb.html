@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	
+
+  <title>DemoApp5</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div id="wrapper">
+<div id="header">
+<div>
+		<h1>Steve's Scuba Store</h1>	
+</div>	
+</div>
+<div id="navbar">
+	<ul>
+		<li><a href="/home" onclick="location.reload(true);">Home</a></li>
+		<li><a href="/about">About Us</a></li>
+		<li><a href="/contact">Contact Us</a></li>
+		<li><a href="/products">Products</a></li>
+		<% if user_signed_in? %>
+		<li><%= link_to 'Logout', destroy_user_session_path(:format => :json), :method => :delete %></li>
+		<% if current_user.firstname == nil%>
+		<li><a href="/myprofile">Enter Details</li>
+			<% end %>
+		<div id="welcome">
+				<li>Welcome <%= current_user.firstname %></li>
+		</div>
+		<% else %>
+		<li><%= link_to 'Login', new_user_session_path %></li>
+		<li><%= link_to 'Register', new_user_registration_path %></li>
+		<% end %>
+	</ul>
+</div>
+
+<div id="content">
+	
+<div id="side">
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+	<h2>Categories</h2>
+	<%= render '/products/categoryDistinctList' %>
+</div>
+	
+<%= yield %>
+</div>
+
+</div>
+
+<!-- Import jQuery-->
+	
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+	<script src ="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="http://malsup.github.com/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
+	
+<script>
+	//script for Ajax page load
+	     var displayResponse = function(response) {
+	     	if(!response) { location.reload(true); }//This completes the end of session, Log out
+	     	
+	     	console.log(response);
+	     	
+         var content =  $("#content");//this is looking at element in the content div
+		content.html(response);
+		content.find("a").on("click", loadAjax);//when any link is clicked LoadAjax function will run
+		content.find("form").on("submit", submitForm);//when the submit button of a form is clcked submitForm will run 
+			
+	}
+	
+	var submitForm = function(e){
+		e.preventDefault();//stops default action taking place, Ajax is now in control
+		
+				
+		var url = $(this).attr("action");//finds the action that is take place
+		var method = $(this).attr("method");//finds the http method to carry out action
+		var data = {};//this will contain the data the loop below is going to find
+		
+ 		$(this).find("input, textarea").each(function(){
+			var name = $(this).attr("name"); 
+			var value = $(this).val();
+			data[name] = value;
+			
+		}); //loops through inputs in form to find data
+		
+		
+		$.ajax({	
+//settings for Ajax request
+			url: url,//action to be taken
+			type: method,//http method
+			data: data,//data to be transfered     
+			success: displayResponse//displays content
+				});  //jquery.ajax(url, {settings}); sets the url and type of action to be taken by form when submitted
+		
+		alert("form has been sent");
+	location.reload(true);//refreshes page as not all elements render on to page when submitting form.
+	}
+	
+	var loadAjax = function(e) {
+	   //if(method !== "post"){
+	   	e.preventDefault();
+	   //}// stops normal function from happening except during post method(log in and create product)
+
+	   var url = $(this).attr("href");
+	   var method = $(this).attr("data-method") || "get"; // retrive the data-method attribute from the clicked link or get if the attribute is empty
+	
+	
+	$.ajax({ // start an ajax request	
+	url: url, // to the following url
+	type: method, // with this http verb (get / post / put / delete)
+	success: displayResponse // when it is done, display the content fetched	
+});
+
+	if(method === "delete") { // if the method is delete
+		$(this).parents("tr").remove(); // remove the row from the page
+	}
+}
+	$("#navbar a").on("click", loadAjax);
+	$("#side a").on("click", loadAjax);
+	//#navbar a => looks at id called nav and anchors (a) inside nav		
+	
+//when the page loads
+	//monitor links to call ajax on the href
+//when the ajax is done
+	//change the content of the page
+	//monitor links to call ajax on the href
+	
+
+
+    var map;
+    var geocoder;
+    function InitializeMap() {
+
+        var latlng = new google.maps.LatLng(53.295914,-6.136769);
+        var myOptions =
+        {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
+        };
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+    }
+
+    function FindLocaiton() {
+        geocoder = new google.maps.Geocoder();
+        InitializeMap();
+
+        var address = "Harbour Road, Dun Laoghire"//document.getElementById("addressinput").value;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+
+            }
+            else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
+
+    }
+
+
+    function Button1_onclick() {
+        FindLocaiton();
+    }
+
+    window.onload = InitializeMap();
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.slideshow').cycle({
+		fx: 'fade' // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+	});
+});
+</script>
+
+</body>
+</html>
